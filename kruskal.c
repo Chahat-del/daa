@@ -1,13 +1,26 @@
 #include <stdio.h>
 
+#define INF 999
+
 int parent[10];
 
 int find(int v)
 {
-    while(parent[v])
+    while(parent[v] != 0)
         v = parent[v];
 
     return v;
+}
+
+int unionSet(int u, int v)
+{
+    if(u != v)
+    {
+        parent[v] = u;
+        return 1;
+    }
+
+    return 0;
 }
 
 int main()
@@ -22,28 +35,28 @@ int main()
     printf("Enter number of vertices: ");
     scanf("%d", &n);
 
-    printf("Enter cost matrix:\n");
+    printf("Enter cost adjacency matrix:\n");
 
-    for(i = 1; i <= n; i++)
+    for(i = 0; i < n; i++)
     {
-        for(j = 1; j <= n; j++)
+        for(j = 0; j < n; j++)
         {
             scanf("%d", &cost[i][j]);
 
             if(cost[i][j] == 0)
-                cost[i][j] = 999;
+                cost[i][j] = INF;
         }
     }
 
-    printf("\nEdges in MST are:\n");
+    printf("\nEdges in Minimum Spanning Tree:\n");
 
     while(edges < n)
     {
-        min = 999;
+        min = INF;
 
-        for(i = 1; i <= n; i++)
+        for(i = 0; i < n; i++)
         {
-            for(j = 1; j <= n; j++)
+            for(j = 0; j < n; j++)
             {
                 if(cost[i][j] < min)
                 {
@@ -58,21 +71,19 @@ int main()
         u = find(u);
         v = find(v);
 
-        if(u != v)
+        if(unionSet(u, v))
         {
-            printf("%d -> %d = %d\n", a, b, min);
+            printf("%d -> %d  cost = %d\n", a, b, min);
 
             mincost += min;
-
-            parent[v] = u;
 
             edges++;
         }
 
-        cost[a][b] = cost[b][a] = 999;
+        cost[a][b] = cost[b][a] = INF;
     }
 
-    printf("\nMinimum cost = %d", mincost);
+    printf("\nMinimum cost = %d\n", mincost);
 
     return 0;
 }

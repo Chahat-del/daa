@@ -18,8 +18,7 @@ int lcs(char X[], char Y[], int m, int n)
         return 1 + lcs(X, Y, m-1, n-1);
 
     else
-        return max(lcs(X, Y, m, n-1),
-                   lcs(X, Y, m-1, n));
+        return max(lcs(X, Y, m, n-1), lcs(X, Y, m-1, n));
 }
 
 int main()

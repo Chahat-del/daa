@@ -58,11 +58,11 @@ int main()
 
     scanf("%d", &n);
 
-    printf("The elements to array using Random Generator\n");
+    printf("Enter the elements:\n");
 
     for(k = 0; k < n; k++)
     {
-        a[k] = rand() % 1000;
+        scanf("%d", &a[k]);
     }
 
     st = clock();
@@ -71,9 +71,17 @@ int main()
 
     et = clock();
 
-    ts = ((double)(et - st) * 1000) / CLOCKS_PER_SEC;
+    ts = ((double)(et - st) * 1000)
+         / CLOCKS_PER_SEC;
 
-    printf("Time taken is %lf", ts);
+    printf("\nSorted elements are:\n");
+
+    for(k = 0; k < n; k++)
+    {
+        printf("%d ", a[k]);
+    }
+
+    printf("\n\nTime taken is %lf ms", ts);
 
     return 0;
 }

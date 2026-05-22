@@ -2,67 +2,86 @@
 #include <stdlib.h>
 #include <time.h>
 
-void Exch(int *p, int *q)
+int partition(int a[], int low, int high)
 {
-    int temp = *p;
-    *p = *q;
-    *q = temp;
-}
+    int pivot, i, j, temp;
 
-void QuickSort(int a[], int low, int high)
-{
-    int i, j, key;
+    pivot = a[low];
 
-    if(low >= high)
-        return;
-
-    key = low;
     i = low + 1;
     j = high;
 
     while(i <= j)
     {
-        while(i <= high && a[i] <= a[key])
+        while(i <= high && a[i] <= pivot)
             i++;
 
-        while(a[j] > a[key])
+        while(a[j] > pivot)
             j--;
 
         if(i < j)
-            Exch(&a[i], &a[j]);
+        {
+            temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
     }
 
-    Exch(&a[j], &a[key]);
+    temp = a[low];
+    a[low] = a[j];
+    a[j] = temp;
 
-    QuickSort(a, low, j - 1);
-    QuickSort(a, j + 1, high);
+    return j;
+}
+
+void quicksort(int a[], int low, int high)
+{
+    int j;
+
+    if(low < high)
+    {
+        j = partition(a, low, high);
+
+        quicksort(a, low, j - 1);
+
+        quicksort(a, j + 1, high);
+    }
 }
 
 int main()
 {
-    int n, a[5000], k;
-    clock_t st, et;
-    double ts;
+    int n, a[10000], i;
 
-    printf("Enter the number of elements\n");
+    clock_t start, end;
+
+    double cpu_time;
+
+    printf("Enter number of elements:\n");
     scanf("%d", &n);
 
-    printf("The elements to array using Random Generator\n");
+    printf("Enter the elements:\n");
 
-    for(k = 0; k < n; k++)
+    for(i = 0; i < n; i++)
     {
-        a[k] = rand() % 1000;
+        scanf("%d", &a[i]);
     }
 
-    st = clock();
+    start = clock();
 
-    QuickSort(a, 0, n - 1);
+    quicksort(a, 0, n - 1);
 
-    et = clock();
+    end = clock();
 
-    ts = (double)(et - st) / CLOCKS_PER_SEC;
+    cpu_time =
+    ((double)(end - start)) / CLOCKS_PER_SEC;
 
-    printf("The time taken by the elements after sorting %lf", ts);
+    printf("\nSorted elements are:\n");
+
+    for(i = 0; i < n; i++)
+        printf("%d ", a[i]);
+
+    printf("\n\nExecution time = %f seconds\n",
+           cpu_time);
 
     return 0;
 }
