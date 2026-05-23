@@ -48,7 +48,8 @@ void quicksort(int a[], int low, int high)
     }
 }
 
-int main()
+
+    int main()
 {
     int n, a[10000], i;
 
@@ -59,11 +60,15 @@ int main()
     printf("Enter number of elements:\n");
     scanf("%d", &n);
 
-    printf("Enter the elements:\n");
+    srand(time(0));
+
+    printf("Random elements are:\n");
 
     for(i = 0; i < n; i++)
     {
-        scanf("%d", &a[i]);
+        a[i] = rand() % 1000;
+
+        printf("%d ", a[i]);
     }
 
     start = clock();
@@ -75,7 +80,7 @@ int main()
     cpu_time =
     ((double)(end - start)) / CLOCKS_PER_SEC;
 
-    printf("\nSorted elements are:\n");
+    printf("\n\nSorted elements are:\n");
 
     for(i = 0; i < n; i++)
         printf("%d ", a[i]);
